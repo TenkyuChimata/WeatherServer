@@ -46,7 +46,7 @@ def sds011():
 def main():
     while True:
         try:
-            esp8266_data = requests.get("http://192.168.0.137", timeout=5).json()
+            esp8266_data = requests.get("http://192.168.0.137", timeout=10).json()
             usv_list.append(esp8266_data["usv"])
             data = {
                 "temperature": esp8266_data["temperature"],

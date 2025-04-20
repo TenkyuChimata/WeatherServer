@@ -1,2 +1,2 @@
-pyecharts>=2.0.7
+pyecharts>=2.0.8
 Requests>=2.32.3
