@@ -11,8 +11,8 @@ humidity_list = collections.deque(maxlen=288)
 pressure_list = collections.deque(maxlen=288)
 radiation_list = collections.deque(maxlen=288)
 radiation_avg_list = collections.deque(maxlen=288)
-# pm25_list = collections.deque(maxlen=288)
-# pm10_list = collections.deque(maxlen=288)
+pm25_list = collections.deque(maxlen=288)
+pm10_list = collections.deque(maxlen=288)
 createat_list = collections.deque(maxlen=288)
 
 
@@ -24,8 +24,8 @@ def get_data():
         temperature = data["temperature"]
         humidity = data["humidity"]
         pressure = data["pressure"]
-        # pm25 = data["pm2.5"]
-        # pm10 = data["pm10"]
+        pm25 = data["pm2.5"]
+        pm10 = data["pm10"]
         create_at = data["create_at"][-8:]
     except Exception as e:
         print(f"{datetime.datetime.now().strftime('[%H:%M:%S]')} Error: {e}")
@@ -36,8 +36,8 @@ def get_data():
         pressure,
         radiation,
         radiation_avg,
-        # pm25,
-        # pm10,
+        pm25,
+        pm10,
         create_at,
     )
 
@@ -69,8 +69,8 @@ while True:
             pressure_list.append(weather_data[2])
             radiation_list.append(weather_data[3])
             radiation_avg_list.append(weather_data[4])
-            # pm25_list.append(weather_data[5])
-            # pm10_list.append(weather_data[6])
+            pm25_list.append(weather_data[5])
+            pm10_list.append(weather_data[6])
             createat_list.append(weather_data[7])
             plot(
                 list(createat_list),
@@ -107,8 +107,20 @@ while True:
                 "电离辐射(小时均值)",
                 "/var/www/html/radiation_avg.html",
             )
-            # plot(list(createat_list), list(pm25_list), "PM2.5 (μg/m³)", "PM2.5", "/var/www/html/pm2.5.html",)
-            # plot(list(createat_list), list(pm10_list), "PM10 (μg/m³)", "PM10", "/var/www/html/pm10.html",)
+            plot(
+                list(createat_list),
+                list(pm25_list),
+                "PM2.5 (μg/m³)",
+                "PM2.5",
+                "/var/www/html/pm2.5.html",
+            )
+            plot(
+                list(createat_list),
+                list(pm10_list),
+                "PM10 (μg/m³)",
+                "PM10",
+                "/var/www/html/pm10.html",
+            )
             time.sleep(300)
         else:
             time.sleep(5)

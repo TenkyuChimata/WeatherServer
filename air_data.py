@@ -5,7 +5,7 @@ import requests
 import datetime
 import threading
 import collections
-# from sds011 import SDS011
+from sds011 import SDS011
 
 pm10, pm25 = 0.1, 0.1
 usv_list = collections.deque(maxlen=60)
@@ -52,8 +52,8 @@ def main():
                 "temperature": esp8266_data["temperature"],
                 "humidity": esp8266_data["humidity"],
                 "pressure": esp8266_data["pressure"],
-                # "pm2.5": pm25,
-                # "pm10": pm10,
+                "pm2.5": pm25,
+                "pm10": pm10,
                 "usv": esp8266_data["usv"],
                 "usv_avg": avg(usv_list),
                 "create_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -69,5 +69,5 @@ def main():
 
 thread1 = threading.Thread(target=sds011)
 thread2 = threading.Thread(target=main)
-# thread1.start()
+thread1.start()
 thread2.start()
