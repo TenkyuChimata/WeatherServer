@@ -5,7 +5,6 @@ import requests
 import datetime
 import threading
 import collections
-#from sds011 import SDS011
 
 pm10, pm25 = 0.1, 0.1
 usv_list = collections.deque(maxlen=60)
@@ -16,31 +15,6 @@ def avg(arr):
         return 0
     average = sum(arr) / len(arr)
     return average
-
-
-def sds011():
-    global pm10, pm25
-    sds = SDS011("/dev/ttyUSB0", use_query_mode=True)
-    sds.sleep(sleep=False)
-    while True:
-        try:
-            time.sleep(20)
-            sds_data = sds.query()
-            if sds_data[0] > 0:
-                pm25 = sds_data[0]
-            else:
-                pm25 = 10.0
-            if sds_data[1] > 0:
-                pm10 = sds_data[1]
-            else:
-                pm10 = 10.0
-            sds.sleep()
-            time.sleep(40)
-            sds.sleep(sleep=False)
-        except Exception as e:
-            print(f"{datetime.datetime.now().strftime('[%H:%M:%S]')} Error: {e}")
-            time.sleep(1)
-            continue
 
 
 def main():
@@ -67,7 +41,5 @@ def main():
             continue
 
 
-thread1 = threading.Thread(target=sds011)
-thread2 = threading.Thread(target=main)
-#thread1.start()
-thread2.start()
+thread1 = threading.Thread(target=main)
+thread1.start()
