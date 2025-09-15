@@ -63,7 +63,7 @@ def plot(x, y, y_name, plot_name, html_name):
 while True:
     try:
         weather_data = get_data()
-        if weather_data != None:
+        if weather_data is not None:
             temperature_list.append(weather_data[0])
             humidity_list.append(weather_data[1])
             pressure_list.append(weather_data[2])
